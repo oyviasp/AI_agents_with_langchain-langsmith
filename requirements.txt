@@ -1,0 +1,12 @@
+langchain-openai
+langchain
+openai
+python-dotenv
+langchain-community
+tiktoken
+langchainhub
+chromadb
+beautifulsoup4
+Wikipedia
+pypdf
+streamlit
