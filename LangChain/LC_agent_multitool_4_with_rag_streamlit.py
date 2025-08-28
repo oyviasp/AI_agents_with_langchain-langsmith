@@ -69,9 +69,8 @@ def initialize_rag_system():
     try:
         # Initialize OpenAI LLM
         llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
-        
         # Check if we have a persistent vector database
-        db_path = "./chroma_db"
+        db_path = "./LangChain/chroma_db"
         if os.path.exists(db_path) and os.listdir(db_path):
             # Load existing vector database (fast)
             vectorstore = Chroma(persist_directory=db_path, embedding_function=OpenAIEmbeddings())
@@ -80,8 +79,8 @@ def initialize_rag_system():
         else:
             # Load PDF Documents (first time setup)
             pdf_files = [
-                "docs_for_rag/impromptu.pdf",
-                "docs_for_rag/GEP-June-2025.pdf"
+                "./LangChain/docs_for_rag/impromptu.pdf",
+                "./LangChain/docs_for_rag/GEP-June-2025.pdf"
             ]
             
             all_docs = []
@@ -284,7 +283,7 @@ def main():
             
             if st.button("� Reset Vector Database"):
                 import shutil
-                db_path = "./chroma_db"
+                db_path = "./Langchain/chroma_db"
                 if os.path.exists(db_path):
                     shutil.rmtree(db_path)
                 st.session_state.chat_initialized = False

@@ -22,8 +22,8 @@ llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
 # Load PDF Documents
 pdf_files = [
-    "docs_for_rag/impromptu.pdf",
-    "docs_for_rag/GEP-June-2025.pdf"
+    "./LangChain/docs_for_rag/impromptu.pdf",
+    "./LangChain/docs_for_rag/GEP-June-2025.pdf"
 ]
 
 all_docs = []

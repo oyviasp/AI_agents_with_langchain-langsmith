@@ -1,5 +1,6 @@
 langchain-openai
 langchain
+langgraph
 openai
 python-dotenv
 langchain-community
@@ -10,3 +11,4 @@ beautifulsoup4
 Wikipedia
 pypdf
 streamlit
+ipython

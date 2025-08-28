@@ -14,7 +14,7 @@ load_dotenv()
 #### INDEXING ####
 
 # Load PDF Document
-loader = PyPDFLoader("docs_for_rag/impromptu.pdf")
+loader = PyPDFLoader("./LangChain/docs_for_rag/impromptu.pdf")
 docs = loader.load()
 
 # Split with metadata preservation
