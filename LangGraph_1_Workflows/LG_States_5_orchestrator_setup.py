@@ -93,7 +93,7 @@ orchestrator_worker = orchestrator_worker_builder.compile()
 
 # Show workflow and save to file
 png_bytes = orchestrator_worker.get_graph().draw_mermaid_png()
-with open("./LangGraph/LG_states_5_orchestrator_workflow.png", "wb") as f:
+with open("./LangGraph_1_Workflows/LG_States_5_orchestrator_setup.png", "wb") as f:
     f.write(png_bytes)
 
 # Invoke

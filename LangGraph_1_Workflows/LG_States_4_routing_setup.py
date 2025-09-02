@@ -103,7 +103,7 @@ router_workflow = router_builder.compile()
 
 # Show workflow and save to file
 png_bytes = router_workflow.get_graph().draw_mermaid_png()
-with open("./LangGraph/LG_states_4_router_workflow.png", "wb") as f:
+with open("./LangGraph_1_Workflows/LG_States_4_routing_setup.png", "wb") as f:
     f.write(png_bytes)
 
 # Invoke

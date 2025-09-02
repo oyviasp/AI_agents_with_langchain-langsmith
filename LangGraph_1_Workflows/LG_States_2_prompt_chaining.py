@@ -62,7 +62,7 @@ chain = workflow.compile()
 
 # Show workflow and save to file
 png_bytes = chain.get_graph().draw_mermaid_png()
-with open("./LangGraph/LG_states_2_prompt_chaining_workflow.png", "wb") as f:
+with open("./LangGraph_1_Workflows/LG_States_2_prompt_chaining.png", "wb") as f:
     f.write(png_bytes)
 
 # Invoke

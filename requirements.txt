@@ -12,3 +12,4 @@ Wikipedia
 pypdf
 streamlit
 ipython
+langchain-ollama
