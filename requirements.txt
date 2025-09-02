@@ -13,3 +13,5 @@ pypdf
 streamlit
 ipython
 langchain-ollama
+langgraph-swarm
+langgraph-supervisor

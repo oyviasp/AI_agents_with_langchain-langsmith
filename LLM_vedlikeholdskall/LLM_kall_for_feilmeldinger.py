@@ -1,18 +1,24 @@
 from dotenv import load_dotenv                      # load .env variables
 from langchain_openai import ChatOpenAI             # OpenAI as llm
 from typing_extensions import TypedDict
-from langchain.prompts import ChatPromptTemplate
+from langchain.prompts import PromptTemplate        # OpenAI as llm
+from typing_extensions import TypedDict, Literal
+from langgraph.graph import StateGraph, START, END
+from pydantic import BaseModel, Field
 load_dotenv()
 
 # Initialize OpenAI LLM
 llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
-class State(TypedDict):
-    tittel: str
-    beskrivelse: str
-    prioritet: str
-    teknisk_plass: str
+class FeilmeldingState(TypedDict):
+    tittel:         str = Field(description="Tittel på feilmeldingen")
+    beskrivelse:    str = Field(description="Beskrivelse av feilen i feilmeldingen")
+    prioritet:      Literal["1", "2", "3", "4","5","6"] = Field(description="Prioritet på feilmeldingen")
+    teknisk_plass:  str = Field(description="Teknisk plassering av feilen")
 
+
+# Augment the LLM with schema for structured output
+feilmelding = llm.with_structured_output(FeilmeldingState)
 
 def _build_title_prompt(self, problem_description: str) -> str:
     """Build the prompt for title generation."""
@@ -36,21 +42,7 @@ def _build_title_prompt(self, problem_description: str) -> str:
 
 
 
-
 PROMPT_TEMPLATE = """
-Answer the question based only on the following context:
-
-{context}
-
----
-
-Answer the question based on the above context: 
-{question}
-"""
-
-# Validation prompt template
-
-VALIDATION_PROMPT_TEMPLATE = """
 Analyser førbrukskontrollen førbrukskontrollen og basert på denne foreslå en tittel og beskrivelse av feilmeldingen basert på kriterier:
 Beskirvelsen av feilmeldingen skal være så detaljert og presis som du klarer ved å bruke informasjonen fra HELE førbrukskontrollen, dersom 
 det ikke er nok informasjon til å lage en fullstendig beskrivelse, beskriv så mye du kan og skriv tydelig hva som mangler

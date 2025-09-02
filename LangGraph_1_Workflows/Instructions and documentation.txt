@@ -1,0 +1,2 @@
+https://www.youtube.com/watch?v=aHCDrAbH_go
+https://langchain-ai.github.io/langgraph/tutorials/workflows/#routing

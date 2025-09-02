@@ -82,5 +82,5 @@ for m in messages["messages"]:
 
 # Show workflow and save to file
 png_bytes = pre_built_agent.get_graph().draw_mermaid_png()
-with open("./LangGraph_2_Agents/LG_2_agent_3_agent_with_tools_pre_build.png", "wb") as f:
+with open("./LangGraph_2_Agents/LG_2_agent_2_agent_with_tools_pre_build.png", "wb") as f:
     f.write(png_bytes)
