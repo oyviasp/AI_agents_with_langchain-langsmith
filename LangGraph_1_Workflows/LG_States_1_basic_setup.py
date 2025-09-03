@@ -30,7 +30,8 @@ def multiply(a: int, b: int) -> int:
 llm_with_tools = llm.bind_tools([multiply])
 
 # Invoke the LLM with input that triggers the tool call
-msg = llm_with_tools.invoke("What is 2 times 3?")
+msg = llm_with_toolsr.invoke("What is 2 times 3?")
+
 
 # Get the tool call
 msg.tool_calls

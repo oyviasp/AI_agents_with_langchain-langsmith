@@ -35,7 +35,7 @@ math_agent = create_react_agent(
     model   =   model,
     tools   =   [add, multiply],
     name    =   "math_expert",
-    prompt  =   "You are a math expert. Always use one tool at a time."
+    prompt  =   "You are a math expert specializing in calculations. Always use tools for ANY mathematical operations - addition, multiplication, etc. Never calculate manually. When given multiple numbers to add, use the add tool step by step."
 )
 
 research_agent = create_react_agent(
@@ -49,12 +49,27 @@ research_agent = create_react_agent(
 workflow = create_supervisor(
     agents          =   [research_agent, math_agent],
     model           =   model,
-    output_mode     =   "last_message", # what we pass back from agent to supervisor - "chat" if we want the full chat history passed back
-    prompt          =   "You are a team supervisor managing a research expert and a math expert. For current events, use research_agent. For math problems, use math_agent."
+    output_mode     =   "full_history", # could give "last_message" for less context
+    prompt          =   """You are a team supervisor managing a research expert and a math expert.
+
+DELEGATION RULES:
+- For current events and data gathering: use research_expert
+- For ANY mathematical calculations (addition, multiplication, percentages, etc.): use math_expert
+- If research_expert provides data that needs calculation, ALWAYS delegate to math_expert
+- NEVER do calculations yourself - always use math_expert for any math operations
+
+WORKFLOW:
+1. If user asks for data + calculation: first research_expert, then math_expert
+2. Always clearly state which agent you're delegating to and why"""
 )
 
 # Compile and run
 app = workflow.compile()
+
+png_bytes = app.get_graph().draw_mermaid_png()
+with open("./LangGraph_2_Agents/LG_2_multi_agent_1_supervisor.png", "wb") as f:
+    f.write(png_bytes)
+
 result = app.invoke({
     "messages": [
         {

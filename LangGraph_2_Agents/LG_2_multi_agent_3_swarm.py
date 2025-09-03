@@ -121,90 +121,18 @@ builder = create_swarm(
 app = builder.compile()
 
 png_bytes = app.get_graph().draw_mermaid_png()
-with open("./LangGraph_3_Swarm/swarm_example_customer_support.png", "wb") as f:
+with open("./LangGraph_2_Agents/LG_2_multi_agent_2_swarm.png", "wb") as f:
     f.write(png_bytes)
 
 
 
+# Test configuration with user ID
+config = {"configurable": {"user_id": "user123"}}
+    
+response1 = app.invoke(
+    {"messages": [{"role": "user", "content": "I need to book a flight from Boston to New York tomorrow"}]},
+    config=config
+)
 
 
-
-
-
-
-
-
-
-# Test the swarm
-if __name__ == "__main__":
-    print("🚀 Testing Customer Support Swarm...")
-    print("=" * 50)
-    
-    # Test configuration with user ID
-    config = {"configurable": {"user_id": "user123"}}
-    
-    # Test 1: Flight booking
-    print("\n🛫 Test 1: Booking a flight")
-    print("-" * 30)
-    
-    response1 = app.invoke(
-        {"messages": [{"role": "user", "content": "I need to book a flight from Boston to New York tomorrow"}]},
-        config=config
-    )
-    
-    print("User:", "I need to book a flight from Boston to New York tomorrow")
-    print("Assistant:", response1["messages"][-1].content)
-    
-    # Test 2: Hotel booking (should transfer to hotel assistant)
-    print("\n🏨 Test 2: Booking a hotel")
-    print("-" * 30)
-    
-    response2 = app.invoke(
-        {"messages": [{"role": "user", "content": "Now I need a hotel in New York"}]},
-        config=config
-    )
-    
-    print("User:", "Now I need a hotel in New York")
-    print("Assistant:", response2["messages"][-1].content)
-    
-    # Test 3: Combined request (flight + hotel in one message)
-    print("\n✈️🏨 Test 3: Combined flight and hotel booking")
-    print("-" * 40)
-    
-    # Use a different user to avoid conflicts
-    config2 = {"configurable": {"user_id": "user456"}}
-    
-    try:
-        response3 = app.invoke(
-            {"messages": [{"role": "user", "content": "I need to book a flight from Boston to New York tomorrow and also need a hotel in New York"}]},
-            config=config2
-        )
-        
-        print("User:", "I need to book a flight from Boston to New York tomorrow and also need a hotel in New York")
-        print("Assistant:", response3["messages"][-1].content)
-        
-        # Check what was actually booked
-        print("\n📋 Test 3b: Combined booking reservation status")
-        print("-" * 30)
-        
-        print("Final reservation for user456:")
-        reservation2 = dict(RESERVATIONS['user456'])
-        for key, value in reservation2.items():
-            print(f"  {key}: {value}")
-            
-    except Exception as e:
-        print(f"Error occurred: {str(e)[:200]}...")
-        print("This shows that Swarm has challenges with complex multi-step requests in a single message")
-    
-    # Test 4: Original user reservation status
-    print("\n📋 Test 4: Original user reservation status")
-    print("-" * 30)
-    
-    print("Final reservation for user123:")
-    reservation = dict(RESERVATIONS['user123'])
-    for key, value in reservation.items():
-        print(f"  {key}: {value}")
-    
-    print("\n✅ Swarm test completed successfully!")
-    print("=" * 50)
 
