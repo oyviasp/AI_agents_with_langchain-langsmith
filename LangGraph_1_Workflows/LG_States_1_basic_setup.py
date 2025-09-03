@@ -4,7 +4,7 @@ from dotenv import load_dotenv                      # load .env variables
 from langsmith import traceable                     # trace in LangSmith
 from langchain_openai import ChatOpenAI             # OpenAI as llm
 from pydantic import BaseModel, Field               # Schema for structured output
-
+from langchain.tools import tool                    # Tool decorator
 load_dotenv()
 
 # Initialize OpenAI LLM
@@ -18,20 +18,23 @@ class SearchQuery(BaseModel):
 # Augment the LLM with schema for structured output
 structured_llm = llm.with_structured_output(SearchQuery)
 
+
 # Invoke the augmented LLM
+
 output = structured_llm.invoke("How does Calcium CT score relate to high cholesterol?")
+print(output)
 
 # Define a tool
-@traceable(name="multiply_function")
+
+@tool
 def multiply(a: int, b: int) -> int:
+    """Multiply two numbers."""
     return a * b
 
 # Augment the LLM with tools
 llm_with_tools = llm.bind_tools([multiply])
 
 # Invoke the LLM with input that triggers the tool call
-msg = llm_with_toolsr.invoke("What is 2 times 3?")
-
-
-# Get the tool call
+msg = llm_with_tools.invoke("What is 2 times 3?")
 msg.tool_calls
+print(msg)
